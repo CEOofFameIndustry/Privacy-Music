@@ -1,0 +1,33 @@
+# Build and install from this repository:  cd desktop/packaging && makepkg -si
+pkgname=privacy-music
+pkgver=3.0.0
+pkgrel=1
+pkgdesc="Private YouTube Music client: no account, no tracking, local library (desktop)"
+arch=('x86_64' 'aarch64')
+license=('GPL-3.0-or-later')
+# yt-dlp fetches the audio (through the app's own firewall); yt-dlp-ejs + deno solve YouTube's JS challenges.
+depends=('webkit2gtk-4.1' 'gtk3' 'opus' 'alsa-lib' 'dbus' 'yt-dlp' 'yt-dlp-ejs' 'deno' 'xdg-desktop-portal' 'libayatana-appindicator')
+makedepends=('cargo')
+optdepends=('pipewire-alsa: audio output on PipeWire systems')
+source=()
+# makepkg's C LTO (-flto=auto) turns the bundled SQLite / QuickJS into LTO bitcode that Rust's linker can't read.
+# Rust code still gets thin LTO from Cargo.toml's release profile.
+options=('!lto' '!debug')
+
+build() {
+  # Build from a copy: makepkg locks packaging/pkg while building, and Cargo would fail scanning the source folder.
+  # (The shared translations sit next to the phone app, so they come along at the same relative path.)
+  rm -rf "$srcdir/repo"; mkdir -p "$srcdir/repo/desktop" "$srcdir/repo/app/src/main/assets"
+  cp -r "$startdir/.."/{src,assets,vendor,build.rs,Cargo.toml,Cargo.lock} "$srcdir/repo/desktop/"
+  cp -r "$startdir/../../app/src/main/assets/i18n" "$srcdir/repo/app/src/main/assets/"
+  cd "$srcdir/repo/desktop"
+  export CARGO_TARGET_DIR="$srcdir/target"
+  cargo build --release --locked
+}
+
+package() {
+  install -Dm755 "$srcdir/target/release/privacy-music" "$pkgdir/usr/bin/privacy-music"
+  install -Dm644 "$startdir/privacy-music.desktop" "$pkgdir/usr/share/applications/privacy-music.desktop"
+  # Same icon as the phone app.
+  install -Dm644 "$startdir/privacy-music.png" "$pkgdir/usr/share/icons/hicolor/512x512/apps/privacy-music.png"
+}

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <!-- Only the encrypted backup file and playlist exports are ever shared. -->
+    <cache-path name="backup" path="backup/" />
+    <cache-path name="export" path="export/" />
+    <!-- A downloaded update, handed to Android's installer. -->
+    <cache-path name="update" path="update/" />
+</paths>

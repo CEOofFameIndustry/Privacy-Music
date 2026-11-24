@@ -1,0 +1,29 @@
+*.iml
+.gradle
+/local.properties
+/.idea/caches
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+
+# Desktop build output and release files (published on GitHub Releases, not in git)
+/desktop/target
+/desktop/packaging/pkg
+/desktop/packaging/src
+/desktop/packaging/*.pkg.tar.zst
+/desktop/packaging/*.zip
+/desktop/packaging/*.tar.gz
+/generated_images
+/.kotlin
+# Signing keys never belong in the repository
+*.jks
+*.keystore
+keystore.properties

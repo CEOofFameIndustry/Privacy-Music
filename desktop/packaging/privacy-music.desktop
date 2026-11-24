@@ -1,0 +1,13 @@
+[Desktop Entry]
+Type=Application
+Name=Privacy Music
+GenericName=Music player
+GenericName[uk]=Музичний плеєр
+Comment=Private YouTube Music client: no account, no tracking, local library
+Comment[uk]=Приватний клієнт YouTube Music: без акаунта й стеження, медіатека лише на пристрої
+Exec=privacy-music
+Icon=privacy-music
+Terminal=false
+Categories=AudioVideo;Audio;Music;Player;
+Keywords=music;youtube;player;privacy;
+StartupWMClass=privacy-music
