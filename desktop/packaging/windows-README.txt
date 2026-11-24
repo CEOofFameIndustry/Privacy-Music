@@ -1,24 +1,24 @@
-Privacy Music для Windows
+Privacy Music for Windows
 =========================
 
-Запуск: розпакуйте всю папку куди завгодно (наприклад, у Документи) і відкрийте privacy-music.exe.
-Нічого встановлювати не треба. Усі файли мають лежати разом в одній папці.
+Install or update with one command (PowerShell):
+  irm https://raw.githubusercontent.com/CEOofFameIndustry/Privacy-Music/main/install.ps1 | iex
+The same command also updates yt-dlp if music stops playing.
 
-Що в папці:
-  privacy-music.exe     сам застосунок
-  WebView2Loader.dll    потрібен для вікна застосунку (сам WebView2 вже є в Windows 10 і 11)
-  yt-dlp\               отримує аудіо з YouTube (офіційна збірка yt-dlp_win, github.com/yt-dlp/yt-dlp, Unlicense)
-  deno.exe              потрібен yt-dlp для перевірок YouTube (офіційна збірка, github.com/denoland/deno, MIT)
+Or by hand: unpack the whole folder anywhere (for example into Documents) and start privacy-music.exe.
+Nothing else needs to be installed. Keep all the files together in one folder.
 
-Ваші дані (медіатека, налаштування) зберігаються лише на цьому комп'ютері:
+What is in the folder:
+  privacy-music.exe     the app
+  WebView2Loader.dll    needed for the app window (WebView2 itself is part of Windows 10 and 11)
+  yt-dlp\               fetches the audio from YouTube (official yt-dlp_win build, github.com/yt-dlp/yt-dlp, Unlicense)
+  deno.exe              needed by yt-dlp for YouTube's checks (official build, github.com/denoland/deno, MIT)
+
+Your data (library, settings) is stored only on this computer:
   %APPDATA%\privacy-music
 
-Якщо Windows SmartScreen попереджає про невідомого видавця: «Докладніше» → «Виконати в будь-якому разі».
-Застосунок не підписаний сертифікатом розробника, але нікуди не надсилає ваших даних.
+If Windows SmartScreen warns about an unknown publisher: "More info" -> "Run anyway".
+The app is not signed with a developer certificate, but it never sends your data anywhere.
 
-Пристрої поруч (телефон): під час першого ввімкнення Windows може спитати дозвіл для мережі —
-дозвольте для «Приватних мереж» (домашній Wi‑Fi).
-
-Встановлення й оновлення однією командою (PowerShell):
-  irm https://raw.githubusercontent.com/CEOofFameIndustry/Privacy-Music/main/install.ps1 | iex
-Вона ж оновлює yt-dlp, якщо музика перестала грати.
+Devices nearby (phone): the first time you turn it on, Windows may ask for network access -
+allow it for "Private networks" (your home Wi-Fi).
