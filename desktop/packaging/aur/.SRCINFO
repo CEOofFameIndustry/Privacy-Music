@@ -1,0 +1,26 @@
+pkgbase = privacy-music
+	pkgdesc = Private YouTube Music client: no account, no tracking, local library (desktop)
+	pkgver = 3.0.0
+	pkgrel = 1
+	url = https://github.com/CEOofFameIndustry/Privacy-Music
+	arch = x86_64
+	arch = aarch64
+	license = GPL-3.0-or-later
+	makedepends = cargo
+	depends = webkit2gtk-4.1
+	depends = gtk3
+	depends = opus
+	depends = alsa-lib
+	depends = dbus
+	depends = yt-dlp
+	depends = yt-dlp-ejs
+	depends = deno
+	depends = xdg-desktop-portal
+	depends = libayatana-appindicator
+	optdepends = pipewire-alsa: audio output on PipeWire systems
+	options = !lto
+	options = !debug
+	source = privacy-music-3.0.0.tar.gz::https://github.com/CEOofFameIndustry/Privacy-Music/archive/refs/tags/v3.0.0.tar.gz
+	sha256sums = 058c7f98aa56dd2d67ec5ad39ddb98ee95374e4dcb38cd8bed071658c87f684a
+
+pkgname = privacy-music

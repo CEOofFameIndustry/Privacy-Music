@@ -1,0 +1,38 @@
+# Maintainer: CEOofFameIndustry <2secondary2surfaced@protonmail.com>
+pkgname=privacy-music
+pkgver=3.0.0
+pkgrel=1
+pkgdesc="Private YouTube Music client: no account, no tracking, local library (desktop)"
+arch=('x86_64' 'aarch64')
+url="https://github.com/CEOofFameIndustry/Privacy-Music"
+license=('GPL-3.0-or-later')
+# yt-dlp fetches the audio (through the app's own firewall); yt-dlp-ejs + deno solve YouTube's JS challenges.
+depends=('webkit2gtk-4.1' 'gtk3' 'opus' 'alsa-lib' 'dbus' 'yt-dlp' 'yt-dlp-ejs' 'deno' 'xdg-desktop-portal' 'libayatana-appindicator')
+makedepends=('cargo')
+optdepends=('pipewire-alsa: audio output on PipeWire systems')
+source=("$pkgname-$pkgver.tar.gz::$url/archive/refs/tags/v$pkgver.tar.gz")
+sha256sums=('058c7f98aa56dd2d67ec5ad39ddb98ee95374e4dcb38cd8bed071658c87f684a')
+# makepkg's C LTO (-flto=auto) turns the bundled SQLite / QuickJS into LTO bitcode that Rust's linker can't read.
+# Rust code still gets thin LTO from Cargo.toml's release profile.
+options=('!lto' '!debug')
+
+prepare() {
+  cd "Privacy-Music-$pkgver/desktop"
+  export RUSTUP_TOOLCHAIN=stable
+  cargo fetch --locked --target "$(rustc -vV | sed -n 's/host: //p')"
+}
+
+build() {
+  cd "Privacy-Music-$pkgver/desktop"
+  export RUSTUP_TOOLCHAIN=stable
+  export CARGO_TARGET_DIR=target
+  cargo build --release --frozen
+}
+
+package() {
+  cd "Privacy-Music-$pkgver"
+  install -Dm755 desktop/target/release/privacy-music "$pkgdir/usr/bin/privacy-music"
+  install -Dm644 desktop/packaging/privacy-music.desktop "$pkgdir/usr/share/applications/privacy-music.desktop"
+  install -Dm644 desktop/packaging/privacy-music.png "$pkgdir/usr/share/icons/hicolor/512x512/apps/privacy-music.png"
+  install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+}
